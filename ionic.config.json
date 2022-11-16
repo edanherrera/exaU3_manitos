@@ -1,0 +1,7 @@
+{
+  "name": "examenU3-Manitos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
