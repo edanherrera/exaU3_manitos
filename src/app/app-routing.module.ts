@@ -8,8 +8,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'new-reservacion',
     pathMatch: 'full'
+  },
+  {
+    path: 'new-reservacion',
+    loadChildren: () => import('./new-reservacion/new-reservacion.module').then( m => m.NewReservacionPageModule)
   },
 ];
 

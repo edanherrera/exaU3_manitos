@@ -24,3 +24,23 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+ion-modal{
+    --background:rgba(177, 177, 177, 0.11);
+
+    &::part(content){
+        backdrop-filter: blur(6px);
+    }
+}
+
+ion-content{
+    background: transparent;
+
+    --padding-top: 25vh;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --background: transparent;
+}
+
+ion-datetime{
+    border-radius: 8px;
+}
