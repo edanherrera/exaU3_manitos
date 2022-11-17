@@ -19,6 +19,12 @@ const routes: Routes = [
     path: 'reservations',
     loadChildren: () => import('./reservations/reservations.module').then( m => m.ReservationsPageModule)
   },
+  {
+    path: 'client',
+    loadChildren: () => import('./tablinks/tablinks.module').then( m => m.TablinksPageModule)
+  },
+
+
 ];
 
 @NgModule({
