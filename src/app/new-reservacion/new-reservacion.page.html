@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Reservación</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -57,8 +60,14 @@
         </ion-select>
       </ion-item>
     </ion-list>
-    <ion-button (click)="addReservation()" expand="block" fill="clear" shape="round">
-      Agregar producto
+    <ion-item>
+      <ion-button slot="end" (click)="addReservation()" expand="block" fill="clear" shape="round">
+        Agregar producto
+      </ion-button>
+    </ion-item>
+
+    <ion-button *ngIf="showToken" href="{{getUrl()}}">
+      Enviar Token
     </ion-button>
   </ion-card>
 </ion-content>

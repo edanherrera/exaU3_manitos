@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lista de reservaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-item-sliding *ngFor="let item of reservation; let i = index">
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-label>{{item.room}}</ion-label>
+            <ion-label>{{item.phone}}</ion-label>
+            <ion-label>{{item.fIn}}</ion-label>
+            <ion-label>{{item.fOut}}</ion-label>
+          </ion-item>
+          <ion-item-options side="end" (ionSwipe)="removeReservation(i)">
+            <ion-item-option expandable color="danger">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+          <ion-item-options side="start" (ionSwipe)="watchReservation()">
+            <ion-item-option expandable color="warning">
+              <ion-icon name="eye-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-col>
+    <ion-fab vertical="bottom" horizontal="end">
+      <ion-fab-button color="warning" (click)="goNewReservation()">
+        <ion-icon name="business-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-row>
+</ion-content>

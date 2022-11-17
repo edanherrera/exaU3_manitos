@@ -9,6 +9,15 @@ export class ReservationService {
   constructor() { }
   
   public addReservation(newReservation:Reservation){
+    console.log("Dato a agregar: "+ newReservation);
     this.reservation.push(newReservation);
+  }
+
+  public getReservation():Reservation[]{
+    return this.reservation;
+  }
+
+  public deleteReservation(pos:number){
+    this.reservation.splice(pos,1);
   }
 }
