@@ -1,9 +1,38 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>ingreso</ion-title>
+    <ion-title>Ingreso</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content  [fullscreen]="true" class="ion-padding">
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Ubicacion hotel</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+          <img alt="location" src="/assets/icon/ubi1.png" />
+          <img alt="location" src="/assets/icon/ubi2.png" />
+          <img alt="location" src="/assets/icon/ubi3.png" />
+      </div>
+    </ion-accordion>
 
-</ion-content>
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Ubicacion check in y check out</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <img alt="location" src="/assets/icon/ubi4.png" />
+      </div>
+    </ion-accordion>
+    <ion-accordion value="third">
+      <ion-item slot="header" color="light">
+        <ion-label>Contraseña caja fuerte</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        {{safePass()}}
+      </div>
+    </ion-accordion>
+          </ion-accordion-group>
+        </ion-content>
+        

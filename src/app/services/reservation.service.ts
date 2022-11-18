@@ -6,6 +6,7 @@ import { Reservation } from '../models/reservation';
 })
 export class ReservationService {
   private reservation : Reservation[] = [];
+  private currentUser = ""
   private codeRooms = [4444,3333,2222,1111];
   constructor() {
     this.reservation=[
@@ -23,7 +24,7 @@ export class ReservationService {
         'fIn' : new Date(),
         'fOut' : new Date(),
         'room' : 'Hab4',
-        'Token': 'clienteHab4prueba'
+        'Token': 'clientHab4prueba'
       }
     ]
   }
@@ -32,7 +33,18 @@ export class ReservationService {
     console.log("Dato a agregar: "+ newReservation);
     this.reservation.push(newReservation);
   }
+
+  public setCurrentUser(user:string){
+    this.currentUser = user
+  }
+
+  public getCurrentUser(){
+    return this.currentUser
+  }
   
+  public getcode(index:number){
+    return this.codeRooms[index]
+  }
   public getReservation():Reservation[]{
     return this.reservation;
   }

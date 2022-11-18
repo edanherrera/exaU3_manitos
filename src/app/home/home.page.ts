@@ -27,6 +27,7 @@ export class HomePage {
     if(!(result==null)){
       if(result.Token?.includes('Hab')){
         console.log('Ingresado con éxito Huesped '+result.Token);
+        this.reservationService.setCurrentUser(result.Token)
           return this.goHomeH();
         }else{
           console.log('Ingresado con éxito Admin '+result.Token);
