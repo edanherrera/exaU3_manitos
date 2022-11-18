@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{textC.title}}</ion-title>
+  </ion-toolbar>
+  <ion-row>
+    <ion-col>
+      <ion-button class="ion-float-right" (click)="selectLang()"><ion-icon name="language-outline"></ion-icon></ion-button>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+
+  <ion-list lines="full">
+    <ion-item *ngFor="let r of textC.rules">
+      <ion-label class="ion-text-wrap">
+        {{r}}  
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
