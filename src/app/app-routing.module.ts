@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'client',
     loadChildren: () => import('./tablinks/tablinks.module').then( m => m.TablinksPageModule)
+  },  {
+    path: 'view-reservation',
+    loadChildren: () => import('./view-reservation/view-reservation.module').then( m => m.ViewReservationPageModule)
   },
+
 
 
 ];

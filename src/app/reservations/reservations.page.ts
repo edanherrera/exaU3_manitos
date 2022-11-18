@@ -26,7 +26,9 @@ export class ReservationsPage implements OnInit {
   public goNewReservation(){
     this.router.navigate(['/new-reservacion']);
   }
-  public watchReservation (){
-    
+  public watchReservation (token: any){
+    this.router.navigate(['/view-reservation'], {
+      queryParams: { id: token  },
+    });
   }
 }
