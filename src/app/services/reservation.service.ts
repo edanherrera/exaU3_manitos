@@ -14,14 +14,16 @@ export class ReservationService {
         'phone' : 352113938685,
         'fIn' : new Date(),
         'fOut' : new Date(),
-        'room' : '123456',
+        'room' : '',
+        'Token': '123456'
       },
       {
         'name' : 'Prueba',
         'phone' : 31,
         'fIn' : new Date(),
         'fOut' : new Date(),
-        'room' : 'clienteprueba',
+        'room' : 'Hab4',
+        'Token': 'clienteHab4prueba'
       }
     ]
   }

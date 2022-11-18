@@ -10,7 +10,7 @@ import { ReservationService } from '../services/reservation.service';
 export class HomePage {
   reservations:Reservation[];
   reservation:Reservation;
-
+  
   constructor(private reservationService:ReservationService,private router: Router) {
     this.reservations = reservationService.getReservation();
     this.reservation={
@@ -23,18 +23,25 @@ export class HomePage {
     }
   }
   public ingresar(){
-    
-    for (let i = 0; i < this.reservations.length; i++) {
-      if(this.reservations[i].Token == this.reservation.Token ){
-        console.log('Ingresado con éxito');
-        this.goHome();
-      }else{
-        console.log('Token: '+this.reservations[i].Token);
-        console.log("Usuario  o Contraseña incorrectos");
-      }
+    var result = this.reservations.find(({Token})=> Token === this.reservation.Token)
+    if(!(result==null)){
+      if(result.Token?.includes('Hab')){
+        console.log('Ingresado con éxito Huesped '+result.Token);
+          return this.goHomeH();
+        }else{
+          console.log('Ingresado con éxito Admin '+result.Token);
+          return this.goHome();
+        }
+    }else{
+      console.log("Usuario  o Contraseña incorrectos ");
     }
   }
   public goHome(){
+    
     this.router.navigate(['/reservations']);
+  }
+  public goHomeH(){
+    
+    this.router.navigate(['/client']);
   }
 }
