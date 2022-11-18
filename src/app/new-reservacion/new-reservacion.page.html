@@ -64,7 +64,8 @@
             <ion-select-option *ngFor="let item of rooms; let i=index" [value]="item">{{item}}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-button *ngIf="showSend" slot="end" (click)="addReservation()" expand="block" fill="clear" shape="round">
+        <ion-button [disabled]="!myForm.valid" slot="end" (click)="addReservation()" expand="block" fill="clear"
+          shape="round">
           Agregar Reservación
         </ion-button>
       </ion-list>
