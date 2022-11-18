@@ -1,14 +1,19 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Ingreso</ion-title>
+    <ion-title>{{textC.title}}</ion-title>
   </ion-toolbar>
+  <ion-row>
+    <ion-col>
+      <ion-button class="ion-float-right" (click)="selectLang()"><ion-icon name="language-outline"></ion-icon></ion-button>
+    </ion-col>
+  </ion-row>
 </ion-header>
 
 <ion-content  [fullscreen]="true" class="ion-padding">
   <ion-accordion-group>
     <ion-accordion value="first">
       <ion-item slot="header" color="light">
-        <ion-label>Ubicacion hotel</ion-label>
+        <ion-label>{{textC.ubicacion}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
           <img alt="location" src="/assets/icon/ubi1.png" />
@@ -19,7 +24,7 @@
 
     <ion-accordion value="second">
       <ion-item slot="header" color="light">
-        <ion-label>Ubicacion check in y check out</ion-label>
+        <ion-label>{{textC.checkUbi}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <img alt="location" src="/assets/icon/ubi4.png" />
@@ -27,7 +32,7 @@
     </ion-accordion>
     <ion-accordion value="third">
       <ion-item slot="header" color="light">
-        <ion-label>Contraseña caja fuerte</ion-label>
+        <ion-label>{{textC.pass}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         {{safePass()}}
