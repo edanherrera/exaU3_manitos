@@ -14,7 +14,6 @@ export class NewReservacionPage implements OnInit {
   showPickerIn = false;
   showPickerOut = false;
   showToken = false;
-  showSend=false;
   dateInValue = '';
   dateOutValue = '';
   dateInLimit = '';
@@ -66,7 +65,6 @@ export class NewReservacionPage implements OnInit {
       'room': [
         {type: 'required', message: "Cuarto obligatorio "},
       ]}
-      if(this.myForm.valid){this.showSend=true;}
     }
     
     // ! ngOnInit
