@@ -18,7 +18,7 @@ export class NewReservacionPage implements OnInit {
   dateOutLimit = '';
   dateToday = this.formatDate(new Date());
   dateTomorrow = new Date();
-  rooms = ['Hab1','Hab2','Hab3','Hab3']
+  rooms = ['Hab1','Hab2','Hab3','Hab3'];
   reservations:Reservation;
   Token = '';
   wNumber : string=''
@@ -85,9 +85,9 @@ export class NewReservacionPage implements OnInit {
     
     // ! Add new reservation in the service 523111310011
     public addReservation(){
+      this.reservations.Token = this.gToken();
       this.reservationService.addReservation(this.reservations);
-      console.log(this.reservations);
-      this.gToken();
+      console.log(this.reservations);      
       this.wNumber=this.reservations.phone.toString();
       this.url="whatsapp://send?phone="+this.wNumber+"&text="+"Sr(a). "+this.reservations.name +" el token para ingresar a su habitación es: "+"*"+this.Token+"*";
       console.log('Token: ' + this.Token);

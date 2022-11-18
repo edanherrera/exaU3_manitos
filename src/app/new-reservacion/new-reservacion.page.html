@@ -60,11 +60,9 @@
         </ion-select>
       </ion-item>
     </ion-list>
-    <ion-item>
-      <ion-button slot="end" (click)="addReservation()" expand="block" fill="clear" shape="round">
-        Agregar producto
-      </ion-button>
-    </ion-item>
+    <ion-button slot="end" (click)="addReservation()" expand="block" fill="clear" shape="round">
+      Agregar Reservación
+    </ion-button>
 
     <ion-button *ngIf="showToken" href="{{getUrl()}}">
       Enviar Token
