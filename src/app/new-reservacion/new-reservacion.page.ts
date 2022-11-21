@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReservationService } from '../services/reservation.service';
 import { Reservation } from '../models/reservation';
 import { FormGroup,FormBuilder,Validators} from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-new-reservacion',
   templateUrl: './new-reservacion.page.html',
@@ -21,12 +22,13 @@ export class NewReservacionPage implements OnInit {
   dateToday = this.formatDate(new Date());
   dateTomorrow = new Date();
   rooms = ['Hab1','Hab2','Hab3','Hab4'];
+  prices = [100,200,300,400];
   reservations:Reservation;
   Token = '';
   wNumber : string=''
   url:string="";
   // ! Constructor
-  constructor( private reservationService : ReservationService,private fb:FormBuilder) {
+  constructor( private reservationService : ReservationService,private fb:FormBuilder, private alertController:AlertController) {
     this.dateTomorrow.setDate(this.dateTomorrow.getDate()+1)
     this.reservations={
       'name' : '',
@@ -34,6 +36,8 @@ export class NewReservacionPage implements OnInit {
       'fIn' : new Date(),
       'fOut' : new Date(),
       'room' : '',
+      'ant':0,
+      'price':0
     }
     this.myForm = this.fb.group({
       'name':["",Validators.required],
@@ -41,6 +45,7 @@ export class NewReservacionPage implements OnInit {
       'fOut':["",Validators.required],
       'fIn':["",Validators.compose([Validators.required,])],
       'room':["",Validators.required],
+      'ant':["",Validators.compose([Validators.required])]
     });
     this.validationMessages = {
 
@@ -64,6 +69,9 @@ export class NewReservacionPage implements OnInit {
 
       'room': [
         {type: 'required', message: "Cuarto obligatorio "},
+      ],
+      'ant':[
+        {type: 'required',message: "Anticipo obligatorio"}
       ]}
     }
     
@@ -115,24 +123,39 @@ export class NewReservacionPage implements OnInit {
         );
       }
       
-      // ! Add new reservation in the service 523111310011
+      // ! Add new reservation in the service
       public addReservation(){
-        this.reservations.Token = this.gToken();
-        this.reservationService.addReservation(this.reservations);
-        console.log(this.reservations);      
-        this.wNumber=this.reservations.phone.toString();
-        this.url="whatsapp://send?phone="+this.wNumber+"&text="+"Sr(a). "+this.reservations.name +" el token para ingresar a su habitación es: "+"*"+this.Token+"*";
-        console.log('Token: ' + this.Token);
-        console.log(this.url);
-        //this.Token='';
-        this.reservations={
-          'name' : '',
-          'phone' : 0,
-          'fIn' : new Date(),
-          'fOut' : new Date(),
-          'room' : '',
+        if(this.reservations.room=='Hab1')this.reservations.price=this.prices[0];
+        if(this.reservations.room=='Hab2')this.reservations.price=this.prices[1];
+        if(this.reservations.room=='Hab3')this.reservations.price=this.prices[2];
+        if(this.reservations.room=='Hab4')this.reservations.price=this.prices[3];
+        console.log(this.reservations.price)
+        console.log(this.reservations.ant)
+        if(this.reservations.price && this.reservations.ant){
+          if(this.reservations.price.valueOf() < this.reservations.ant.valueOf() ){
+            this.presentAlert() 
+            return
+          }
         }
-        this.showToken = true;
+            this.reservations.Token = this.gToken();
+          this.reservationService.addReservation(this.reservations);
+          console.log(this.reservations);      
+          this.wNumber=this.reservations.phone.toString();
+          this.url="whatsapp://send?phone="+this.wNumber+"&text="+"Sr(a). "+this.reservations.name +" el token para ingresar a su habitación es: "+"*"+this.Token+"*";
+          console.log('Token: ' + this.Token);
+          console.log(this.url);
+          //this.Token='';
+          this.reservations={
+            'name' : '',
+            'phone' : 0,
+            'fIn' : new Date(),
+            'fOut' : new Date(),
+            'room' : '',
+            'ant': 0,
+            'price': 0
+          }
+          this.showToken = true;    
+     
       }
       
       public getUrl():string{
@@ -148,5 +171,16 @@ export class NewReservacionPage implements OnInit {
         this.reservations.phone.toString().substring(5,8) 
         + this.reservations.room  
         + Math.floor(Math.random() * (max - min + 1) + min).toString());
+      }
+
+      async presentAlert() {
+        const alert = await this.alertController.create({
+          header: 'Atención',
+          subHeader: 'Error',
+          message: 'El anticipo supera al precio de la habitación',
+          buttons: ['OK'],
+        });
+    
+        await alert.present();
       }
     }

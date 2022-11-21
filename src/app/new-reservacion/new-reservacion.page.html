@@ -64,6 +64,11 @@
             <ion-select-option *ngFor="let item of rooms; let i=index" [value]="item">{{item}}</ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-item>
+          <ion-label position="floating">Anticipo</ion-label>
+          <ion-input placeholder="Ingresar anticipo" [(ngModel)]="reservations.ant"
+            formControlName="ant" type="number"></ion-input>
+        </ion-item>
         <ion-button [disabled]="!myForm.valid" slot="end" (click)="addReservation()" expand="block" fill="clear"
           shape="round">
           Agregar Reservación
