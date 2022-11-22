@@ -24,35 +24,41 @@ export class HomePage {
       'Token':'',
     }
   }
+  
   public ingresar(){
     var result = this.reservations.find(({Token})=> Token === this.reservation.Token)
     if(!(result==null)){
-      
-      
+
+
       if(result.Token?.includes('Hab')){
-        if(result.fIn.getDate==this.dateToday.getDate){
+        
+        //if(result.fIn.getDate()>this.dateToday.getDate()){
           console.log('Fecha iguanita');
           console.log('Ingresado con éxito Huesped '+result.Token);
           this.reservationService.setCurrentUser(result.Token)
           this.message='Ingreso con éxito';
           return this.goHomeH();
-        }else{
-          this.message='Aún no está en fecha para su ingreso'
-        }
+
+        //}else{
+          //this.message='Aún no está en fecha para su ingreso'
+        //}
+
+
       }else{
-        if(result.fIn.getDate==this.dateToday.getDate){
+        //if(result.fIn.getDate()==this.dateToday.getDate()){
           console.log('Fecha iguanita');
           console.log('Ingresado con éxito Admin '+result.Token);
           this.message='Ingreso con éxito';
           return this.goHome();
-          
-        }else{this.message='Aún no está en fecha para su ingreso';}
+
+        //}else{this.message='Aún no está en fecha para su ingreso';}
       }
     }else{
       console.log("Usuario  o Contraseña incorrectos ");
       this.message='Token incorrecto';
     }
   }
+
   public goHome(){
     
     this.router.navigate(['/reservations']);

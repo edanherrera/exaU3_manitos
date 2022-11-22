@@ -122,14 +122,21 @@ export class NewReservacionPage implements OnInit {
         ].join(':')
         );
       }
-      
+
       // ! Add new reservation in the service
       public addReservation(){
+        const d1 = new Date(this.reservations.fIn).getTime();
+        const d2 = new Date(this.reservations.fOut).getTime();
+        var diff = Math.abs(d2 - d1);
+        var dias = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        console.log('Inicio: ',d1)
+        console.log('fin: ',d2)
+        console.log('dias: ',dias) 
         if(this.available()){        
-        if(this.reservations.room=='Hab1')this.reservations.price=this.prices[0];
-        if(this.reservations.room=='Hab2')this.reservations.price=this.prices[1];
-        if(this.reservations.room=='Hab3')this.reservations.price=this.prices[2];
-        if(this.reservations.room=='Hab4')this.reservations.price=this.prices[3];
+        if(this.reservations.room=='Hab1'){this.reservations.price=(this.prices[0]*dias);}
+        if(this.reservations.room=='Hab2'){this.reservations.price=(this.prices[1]*dias);}
+        if(this.reservations.room=='Hab3'){this.reservations.price=(this.prices[2]*dias);}
+        if(this.reservations.room=='Hab4'){this.reservations.price=(this.prices[3]*dias);}
         if(this.reservations.price && this.reservations.ant){
           if(this.reservations.price.valueOf() < this.reservations.ant.valueOf() ){
             this.presentAlert() 
