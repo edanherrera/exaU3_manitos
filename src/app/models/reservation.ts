@@ -5,4 +5,6 @@ export class Reservation {
     'fOut' : Date;
     'room' : string;
     'Token'?: string;
+    'ant'?: number;
+    'price'?:number;
 }

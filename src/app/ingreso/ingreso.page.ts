@@ -18,7 +18,7 @@ export class IngresoPage implements OnInit {
   private token=null
   private user = ""
   constructor(private reservation:ReservationService,private lp: LanguageService, private al: AlertController ) { 
-    this.user = reservation.getCurrentUser()
+    
   }
 
   ionViewWillEnter() {

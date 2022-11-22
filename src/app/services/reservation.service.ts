@@ -16,7 +16,9 @@ export class ReservationService {
         'fIn' : new Date(),
         'fOut' : new Date(),
         'room' : '',
-        'Token': '123456'
+        'Token': '123456',
+        'ant':100,
+        'price':500
       },
       {
         'name' : 'Prueba',
@@ -24,7 +26,9 @@ export class ReservationService {
         'fIn' : new Date(),
         'fOut' : new Date(),
         'room' : 'Hab4',
-        'Token': 'clientHab4prueba'
+        'Token': 'clientHab4prueba',
+        'ant': 0,
+        'price':500
       }
     ]
   }
@@ -54,5 +58,12 @@ export class ReservationService {
   }
   public getCodeRoom():number[]{
     return this.codeRooms;
+  }
+
+  public getReservationByToken(token: string): Reservation{
+    let item: Reservation = this.reservation.find((res)=> {
+      return res.Token===token;
+    })!;
+    return item;
   }
 }
