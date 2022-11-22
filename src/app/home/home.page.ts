@@ -24,6 +24,7 @@ export class HomePage {
       'Token':'',
     }
   }
+  
   public ingresar(){
     var result = this.reservations.find(({Token})=> Token === this.reservation.Token)
     if(!(result==null)){
@@ -72,6 +73,7 @@ export class HomePage {
       this.message='Token incorrecto';
     }
   }
+
   public goHome(){
     
     this.router.navigate(['/reservations']);
