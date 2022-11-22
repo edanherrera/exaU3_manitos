@@ -47,7 +47,7 @@ export class HomePage {
       
       if(result.Token?.includes('Hab')){
         //523112609614
-        if(Fecha2<=Fecha1 || Fecha2<=Fecha2_2){
+        if(Fecha2<=Fecha1 || Fecha2_2<=Fecha1){
           console.log('Fecha iguanita');
           console.log('Ingresado con éxito Huesped '+result.Token);
           this.reservationService.setCurrentUser(result.Token)
