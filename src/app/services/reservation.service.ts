@@ -34,7 +34,7 @@ export class ReservationService {
   }
   
   public addReservation(newReservation:Reservation){
-    console.log("Dato a agregar: "+ newReservation);
+    //console.log("Dato a agregar: "+ newReservation);
     this.reservation.push(newReservation);
   }
 
