@@ -125,12 +125,11 @@ export class NewReservacionPage implements OnInit {
       
       // ! Add new reservation in the service
       public addReservation(){
+        if(this.available()){        
         if(this.reservations.room=='Hab1')this.reservations.price=this.prices[0];
         if(this.reservations.room=='Hab2')this.reservations.price=this.prices[1];
         if(this.reservations.room=='Hab3')this.reservations.price=this.prices[2];
         if(this.reservations.room=='Hab4')this.reservations.price=this.prices[3];
-        console.log(this.reservations.price)
-        console.log(this.reservations.ant)
         if(this.reservations.price && this.reservations.ant){
           if(this.reservations.price.valueOf() < this.reservations.ant.valueOf() ){
             this.presentAlert() 
@@ -138,12 +137,10 @@ export class NewReservacionPage implements OnInit {
           }
         }
             this.reservations.Token = this.gToken();
-          this.reservationService.addReservation(this.reservations);
-          console.log(this.reservations);      
+          this.reservationService.addReservation(this.reservations);  
           this.wNumber=this.reservations.phone.toString();
           this.url="whatsapp://send?phone="+this.wNumber+"&text="+"Sr(a). "+this.reservations.name +" el token para ingresar a su habitación es: "+"*"+this.Token+"*";
           console.log('Token: ' + this.Token);
-          console.log(this.url);
           //this.Token='';
           this.reservations={
             'name' : '',
@@ -154,8 +151,24 @@ export class NewReservacionPage implements OnInit {
             'ant': 0,
             'price': 0
           }
-          this.showToken = true;    
+          this.showToken = true;   }
+          else{
+            this.sameHabAlert()
+          } 
      
+      }
+
+      available(){
+        let reservs = this.reservationService.getReservation()
+        for(let i=0;i<reservs.length;i++){
+          if(reservs[i].room==this.reservations.room){
+            if(this.reservations.fIn>=reservs[i].fIn&&this.reservations.fOut<=reservs[i].fOut)return false
+            if(this.reservations.fIn<=reservs[i].fIn&&this.reservations.fOut<=reservs[i].fOut&&this.reservations.fOut>=reservs[i].fIn)return false
+            if(this.reservations.fIn<=reservs[i].fIn&&this.reservations.fOut>=reservs[i].fOut)return false
+            if(this.reservations.fIn>=reservs[i].fIn&&this.reservations.fOut>=reservs[i].fOut&&this.reservations.fIn<=reservs[i].fOut)return false
+          }
+        }
+        return true
       }
       
       public getUrl():string{
@@ -178,6 +191,16 @@ export class NewReservacionPage implements OnInit {
           header: 'Atención',
           subHeader: 'Error',
           message: 'El anticipo supera al precio de la habitación',
+          buttons: ['OK'],
+        });
+    
+        await alert.present();
+      }
+      async sameHabAlert() {
+        const alert = await this.alertController.create({
+          header: 'Atención',
+          subHeader: 'Error',
+          message: 'La habitacion se encuentra ocupada esa fecha',
           buttons: ['OK'],
         });
     
