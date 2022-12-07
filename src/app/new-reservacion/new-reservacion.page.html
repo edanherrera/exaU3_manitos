@@ -30,10 +30,9 @@
       <ion-modal trigger="open-modal-in" mode="md">
         <ng-template>
           <ion-content>
-            <ion-datetime #datetimeIn size="cover" presentation="date" displayFormat="MM/DD/YYYY" [min]="dateInLimit"
-              max="2030-12-09" [value]="dateInValue" (ionChange)="dateChangedIn(datetimeIn.value)"
-              showDefaultButtons="true" (ionCancel)="showPickerIn=false;" [(ngModel)]="reservations.fIn"
-              formControlName="fIn">
+            <ion-datetime #datetimeIn size="cover" displayFormat="MM/DD/YYYY" [min]="dateInLimit" max="2030-12-09"
+              [value]="dateInValue" (ionChange)="dateChangedIn(datetimeIn.value)" showDefaultButtons="true"
+              (ionCancel)="showPickerIn=false;" [(ngModel)]="reservations.fIn" formControlName="fIn">
             </ion-datetime>
           </ion-content>
         </ng-template>
@@ -49,10 +48,9 @@
       <ion-modal trigger="open-modal-out" mode="md">
         <ng-template>
           <ion-content>
-            <ion-datetime #datetimeOut size="cover" presentation="date" displayFormat="MM/DD/YYYY" [min]="dateInValue"
-              max="2030-12-09" [value]="dateOutValue" (ionChange)="dateChangedOut(datetimeOut.value)"
-              showDefaultButtons="true" (ionCancel)="showPickerOut=false;" [(ngModel)]="reservations.fOut"
-              formControlName="fOut">
+            <ion-datetime #datetimeOut size="cover" displayFormat="MM/DD/YYYY" [min]="dateInValue" max="2030-12-09"
+              [value]="dateOutValue" (ionChange)="dateChangedOut(datetimeOut.value)" showDefaultButtons="true"
+              (ionCancel)="showPickerOut=false;" [(ngModel)]="reservations.fOut" formControlName="fOut">
             </ion-datetime>
           </ion-content>
         </ng-template>
@@ -66,8 +64,8 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Anticipo</ion-label>
-          <ion-input placeholder="Ingresar anticipo" [(ngModel)]="reservations.ant"
-            formControlName="ant" type="number"></ion-input>
+          <ion-input placeholder="Ingresar anticipo" [(ngModel)]="reservations.ant" formControlName="ant" type="number">
+          </ion-input>
         </ion-item>
         <ion-button [disabled]="!myForm.valid" slot="end" (click)="addReservation()" expand="block" fill="clear"
           shape="round">

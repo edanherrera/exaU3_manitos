@@ -33,6 +33,7 @@ export class IngresoPage implements OnInit {
   }
 
   safePass(){
+    this.user=this.reservation.getCurrentUser()
     let hab = this.user.substring(9,10)
     let password = this.reservation.getcode(Number(hab)-1)
     return password
