@@ -9,12 +9,14 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  reservations:Reservation[];
+  reservations:Reservation[] = [];
   reservation:Reservation;
   dateToday = new Date();
   message = '';
   constructor(private reservationService:ReservationService,private router: Router, private alertController: AlertController) {
-    this.reservations = reservationService.getReservation();
+    this.reservationService.getReservation().subscribe(res => {
+      this.reservations = res
+    });
     this.reservation={
       'name' : '',
       'phone' : 0,
@@ -26,6 +28,10 @@ export class HomePage {
   }
   
   public ingresar(){
+    if(this.reservation.Token == 'admin'){
+      this.router.navigate(['reservations'])
+      return
+    }
     var result = this.reservations.find(({Token})=> Token === this.reservation.Token)
     if(!(result==null)){
 
@@ -68,6 +74,9 @@ export class HomePage {
     this.router.navigate(['/client']);
   }
   async presentAlert() {
+    if(this.reservation.Token == 'admin'){
+      return
+    }
     const alert = await this.alertController.create({
       header: 'Alert',
       subHeader: 'Importante',

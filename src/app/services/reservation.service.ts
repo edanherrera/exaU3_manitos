@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs';
 import { Reservation } from '../models/reservation';
 
 @Injectable({
@@ -8,7 +10,7 @@ export class ReservationService {
   private reservation : Reservation[] = [];
   private currentUser = ""
   private codeRooms = [4444,3333,2222,1111];
-  constructor() {
+  constructor(private firestore: AngularFirestore) {
     this.reservation=[
       {
         'name' : 'Eduardo Herrera',
@@ -34,8 +36,7 @@ export class ReservationService {
   }
   
   public addReservation(newReservation:Reservation){
-    console.log("Dato a agregar: "+ newReservation);
-    this.reservation.push(newReservation);
+    this.firestore.collection('reservations').add(newReservation);
   }
 
   public setCurrentUser(user:string){
@@ -49,10 +50,21 @@ export class ReservationService {
   public getcode(index:number){
     return this.codeRooms[index]
   }
-  public getReservation():Reservation[]{
-    return this.reservation;
+  public getReservation(){
+    return this.firestore.collection('reservations').snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Reservation;
+          const id = a.payload.doc.id;
+          return {id,...data};
+        });
+      }));
   }
   
+  public getReservationById(id:string){
+    return this.firestore.collection('reservations').doc(id).valueChanges();
+  }
+
   public deleteReservation(pos:number){
     this.reservation.splice(pos,1);
   }

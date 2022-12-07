@@ -12,7 +12,10 @@ export class ReservationsPage implements OnInit {
   public reservation : Reservation[] = [];
 
   constructor(private reservationService:ReservationService, private router:Router) { 
-    this.reservation = this.reservationService.getReservation();
+    this.reservationService.getReservation().subscribe(res => {
+      this.reservation=res
+      console.log(this.reservation)
+    });
   }
 
   ngOnInit() {
@@ -20,7 +23,9 @@ export class ReservationsPage implements OnInit {
 
   public removeReservation(pos:number){
     this.reservationService.deleteReservation(pos);
-    this.reservation=this.reservationService.getReservation();
+    this.reservationService.getReservation().subscribe(res => {
+      this.reservation
+    });
   }
 
   public goNewReservation(){

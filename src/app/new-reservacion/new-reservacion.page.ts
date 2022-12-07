@@ -29,6 +29,7 @@ export class NewReservacionPage implements OnInit {
   url:string="";
   // ! Constructor
   constructor( private reservationService : ReservationService,private fb:FormBuilder, private alertController:AlertController) {
+    console.log('fecha hoy',new Date())
     this.dateTomorrow.setDate(this.dateTomorrow.getDate()+1)
     this.reservations={
       'name' : '',
@@ -166,7 +167,11 @@ export class NewReservacionPage implements OnInit {
       }
 
       available(){
-        let reservs = this.reservationService.getReservation()
+        let reservs:any = []
+        this.reservationService.getReservation().subscribe(res => {
+          reservs = res
+        })
+        
         for(let i=0;i<reservs.length;i++){
           if(reservs[i].room==this.reservations.room){
             if(this.reservations.fIn>=reservs[i].fIn&&this.reservations.fOut<=reservs[i].fOut)return false

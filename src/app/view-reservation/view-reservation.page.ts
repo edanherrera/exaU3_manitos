@@ -16,17 +16,9 @@ export class ViewReservationPage implements OnInit {
   
   constructor(private route: ActivatedRoute,private reservationService:ReservationService) { 
     this.route.queryParams.subscribe(async (params) => {
-      this.reservations = this.reservationService.getReservation();
-      for(let i=0;i<this.reservations.length;i++){
-        if(this.reservations[i].Token==params['id']){
-          this.reservation.name = this.reservations[i].name
-          this.reservation.phone = this.reservations[i].phone
-          this.reservation.fIn = this.reservations[i].fIn
-          this.reservation.fOut = this.reservations[i].fOut
-          this.reservation.room = this.reservations[i].room
-          this.reservation.Token = this.reservations[i].Token
-        }
-      }
+      this.reservationService.getReservationById(params['id']).subscribe(i => {
+        this.reservation = i as Reservation
+      })
     });  
   }
   

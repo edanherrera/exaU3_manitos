@@ -7,4 +7,5 @@ export class Reservation {
     'Token'?: string;
     'ant'?: number;
     'price'?:number;
+    'id'?:string;
 }
