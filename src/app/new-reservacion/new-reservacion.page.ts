@@ -24,13 +24,17 @@ export class NewReservacionPage implements OnInit {
   rooms = ['Hab1','Hab2','Hab3','Hab4'];
   prices = [100,200,300,400];
   reservations:Reservation;
+  reservation:Reservation[] = [];
   Token = '';
   wNumber : string=''
   url:string="";
   // ! Constructor
   constructor( private reservationService : ReservationService,private fb:FormBuilder, private alertController:AlertController) {
-    console.log('fecha hoy',new Date())
-    this.dateTomorrow.setDate(this.dateTomorrow.getDate()+1)
+    console.log('fecha hoy',new Date());
+    this.reservationService.getReservation().subscribe(res => {
+      this.reservation = res;
+    })
+    this.dateTomorrow.setDate(this.dateTomorrow.getDate()+1);
     this.reservations={
       'name' : '',
       'phone' : 0,
@@ -167,17 +171,18 @@ export class NewReservacionPage implements OnInit {
       }
 
       available(){
-        let reservs:any = []
-        this.reservationService.getReservation().subscribe(res => {
-          reservs = res
-        })
+        // let this.reservation:Reservation[] = []
+        // this.reservationService.getReservation().subscribe(res => {
+        //   this.reservation = res
+        // })
         
-        for(let i=0;i<reservs.length;i++){
-          if(reservs[i].room==this.reservations.room){
-            if(this.reservations.fIn>=reservs[i].fIn&&this.reservations.fOut<=reservs[i].fOut)return false
-            if(this.reservations.fIn<=reservs[i].fIn&&this.reservations.fOut<=reservs[i].fOut&&this.reservations.fOut>=reservs[i].fIn)return false
-            if(this.reservations.fIn<=reservs[i].fIn&&this.reservations.fOut>=reservs[i].fOut)return false
-            if(this.reservations.fIn>=reservs[i].fIn&&this.reservations.fOut>=reservs[i].fOut&&this.reservations.fIn<=reservs[i].fOut)return false
+        
+        for(let i=0;i<this.reservation.length;i++){
+          if(this.reservation[i].room==this.reservations.room){
+            if(this.reservations.fIn>=this.reservation[i].fIn&&this.reservations.fOut<=this.reservation[i].fOut)return false
+            if(this.reservations.fIn<=this.reservation[i].fIn&&this.reservations.fOut<=this.reservation[i].fOut&&this.reservations.fOut>=this.reservation[i].fIn)return false
+            if(this.reservations.fIn<=this.reservation[i].fIn&&this.reservations.fOut>=this.reservation[i].fOut)return false
+            if(this.reservations.fIn>=this.reservation[i].fIn&&this.reservations.fOut>=this.reservation[i].fOut&&this.reservations.fIn<=this.reservation[i].fOut)return false
           }
         }
         return true

@@ -14,7 +14,7 @@ export class ReservationsPage implements OnInit {
   constructor(private reservationService:ReservationService, private router:Router) { 
     this.reservationService.getReservation().subscribe(res => {
       this.reservation=res
-      console.log(this.reservation)
+      console.log("Las reservaciones: "+this.reservation)
     });
   }
 
@@ -32,6 +32,7 @@ export class ReservationsPage implements OnInit {
     this.router.navigate(['/new-reservacion']);
   }
   public watchReservation (token: any){
+    console.log("Las reservaciones: "+this.reservation)
     this.router.navigate(['/view-reservation'], {
       queryParams: { id: token  },
     });

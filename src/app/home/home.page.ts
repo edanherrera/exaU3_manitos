@@ -14,9 +14,6 @@ export class HomePage {
   dateToday = new Date().toISOString();
   message = '';
   constructor(private reservationService:ReservationService,private router: Router, private alertController: AlertController) {
-    this.reservationService.getReservation().subscribe(res => {
-      this.reservations = res
-    });
     this.reservation={
       'name' : '',
       'phone' : 0,
@@ -25,6 +22,11 @@ export class HomePage {
       'room' : '',
       'Token':'',
     }
+    this.reservationService.getReservation().subscribe(res => {
+      this.reservations = res
+    });
+    
+    
   }
   
   public ingresar(){
@@ -33,6 +35,7 @@ export class HomePage {
       return
     }
     var result = this.reservations.find(({Token})=> Token === this.reservation.Token)
+    
     if(!(result==null)){
       console.log("Fecha entrada: "+result.fIn);
       console.log("Fecha Hoy:" + this.dateToday);
@@ -58,7 +61,7 @@ export class HomePage {
           console.log('Ingresado con éxito Huesped '+result.Token);
           this.reservationService.setCurrentUser(result.Token)
           this.message='Ingreso con éxito';
-          return this.goHomeH();
+          return this.goHomeH(result.id);
           
         }else{
           this.message='Aún no está en fecha para su ingreso'
@@ -84,9 +87,10 @@ export class HomePage {
     
     this.router.navigate(['/reservations']);
   }
-  public goHomeH(){
-    
-    this.router.navigate(['/client']);
+  public goHomeH(id : any){
+    this.router.navigate(['/client/ingreso'],{
+      queryParams: { id: id },
+    });
   }
   async presentAlert() {
     if(this.reservation.Token == 'admin'){

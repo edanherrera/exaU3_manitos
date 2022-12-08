@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs';
 import { Reservation } from '../models/reservation';
-
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -50,7 +50,7 @@ export class ReservationService {
   public getcode(index:number){
     return this.codeRooms[index]
   }
-  public getReservation(){
+  public getReservation(): Observable<Reservation[]>{
     return this.firestore.collection('reservations').snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
@@ -72,10 +72,7 @@ export class ReservationService {
     return this.codeRooms;
   }
 
-  public getReservationByToken(token: string): Reservation{
-    let item: Reservation = this.reservation.find((res)=> {
-      return res.Token===token;
-    })!;
-    return item;
+  public getReservationByToken(token: string){
+    return this.firestore.collection('reservations').doc(token).valueChanges();
   }
 }
