@@ -17,7 +17,7 @@
             <ion-label>{{item.fOut}}</ion-label>
             <ion-label>{{item.Token}}</ion-label>
           </ion-item>
-          <ion-item-options side="end" (ionSwipe)="removeReservation(i)">
+          <ion-item-options side="end" (ionSwipe)="removeReservation(item.id)">
             <ion-item-option expandable color="danger">
               <ion-icon name="trash-outline"></ion-icon>
             </ion-item-option>

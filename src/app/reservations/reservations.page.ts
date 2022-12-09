@@ -21,11 +21,8 @@ export class ReservationsPage implements OnInit {
   ngOnInit() {
   }
 
-  public removeReservation(pos:number){
-    this.reservationService.deleteReservation(pos);
-    this.reservationService.getReservation().subscribe(res => {
-      this.reservation
-    });
+  public removeReservation(id:any){
+    this.reservationService.deleteReservation(id)
   }
 
   public goNewReservation(){

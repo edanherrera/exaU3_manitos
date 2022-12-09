@@ -91,8 +91,8 @@ export class ReservationService {
     return this.firestore.collection('reservations').doc(id).valueChanges();
   }
 
-  public deleteReservation(pos:number){
-    this.reservation.splice(pos,1);
+  public deleteReservation(id:string){
+    this.firestore.collection('reservations').doc(id).delete()
   }
   public getCodeRoom():number[]{
     return this.codeRooms;
