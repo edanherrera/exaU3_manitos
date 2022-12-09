@@ -129,7 +129,7 @@ export class NewReservacionPage implements OnInit {
       }
 
       // ! Add new reservation in the service
-      public addReservation(){
+      async addReservation(){
         const d1 = new Date(this.reservations.fIn).getTime();
         const d2 = new Date(this.reservations.fOut).getTime();
         var diff = Math.abs(d2 - d1);
@@ -148,8 +148,9 @@ export class NewReservacionPage implements OnInit {
             return
           }
         }
-            this.reservations.Token = this.gToken();
-          this.reservationService.addReservation(this.reservations);  
+            this.reservations.Token = this.gToken().toLowerCase();
+          let createuser = await this.reservationService.createAccount(this.reservations.Token,this.reservations.Token);  
+          await this.reservationService.addReservation(this.reservations,createuser?.user?.uid as string);
           this.wNumber=this.reservations.phone.toString();
           this.url="whatsapp://send?phone="+this.wNumber+"&text="+"Sr(a). "+this.reservations.name +" el token para ingresar a su habitación es: "+"*"+this.Token+"*";
           console.log('Token: ' + this.Token);
@@ -167,7 +168,7 @@ export class NewReservacionPage implements OnInit {
           else{
             this.sameHabAlert()
           } 
-     
+          await this.reservationService.logout()
       }
 
       available(){

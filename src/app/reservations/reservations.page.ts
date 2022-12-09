@@ -37,4 +37,8 @@ export class ReservationsPage implements OnInit {
       queryParams: { id: token  },
     });
   }
+
+  public logout(){
+    this.router.navigate(['']);
+  }
 }

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AlertController } from '@ionic/angular';
 import { LanguageService } from '../services/language.service';
 import { ReservationService } from '../services/reservation.service';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Router } from '@angular/router';
+import { Reservation } from '../models/reservation';
 
 @Component({
   selector: 'app-ingreso',
@@ -15,28 +19,43 @@ export class IngresoPage implements OnInit {
 
   textC = this.textSp
   lan: string = 'sp'
+  private id?:string;
+  private password?:number;
   private token=null
-  private user = ""
-  constructor(private reservation:ReservationService,private lp: LanguageService, private al: AlertController ) { 
-    
+  private res: Reservation = new Reservation;
+  constructor(private reservation:ReservationService,
+    private lp: LanguageService, 
+    private router:Router,
+    private al: AlertController
+    ,private auth:AngularFireAuth ) { 
+      const auth1 = getAuth();
+      auth1.onAuthStateChanged((user)=>{
+        this.id=user?.uid
+        this.reservation.getReservationById(this.id!).subscribe(i => {
+          this.res = i as Reservation
+          let pass = this.res.room.substring(3,4)
+          this.password = this.reservation.getcode(Number(pass)-1)
+          console.log(this.password)
+        })
+      })
   }
 
   ionViewWillEnter() {
-    console.log("ingreso entering")
     this.lan=this.lp.getLan()
     if(this.lan=='sp')this.textC=this.textSp
     if(this.lan=='en')this.textC=this.textEn
     if(this.lan=='fr')this.textC=this.textFr
   }
   
-  ngOnInit() {
+  ngOnInit() { 
   }
 
-  safePass(){
-    this.user=this.reservation.getCurrentUser()
-    let hab = this.user.substring(9,10)
-    let password = this.reservation.getcode(Number(hab)-1)
-    return password
+  public safePass(){
+    return this.password
+  }
+  public logout(){
+    this.router.navigate(['']);
+    this.reservation.logout()
   }
 
   applyLanguage(){

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
+import { canActivate, redirectUnauthorizedTo,redirectLoggedInTo} from '@angular/fire/compat/auth-guard';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
   },
   {
     path: '',
@@ -22,7 +22,8 @@ const routes: Routes = [
   {
     path: 'client',
     loadChildren: () => import('./tablinks/tablinks.module').then( m => m.TablinksPageModule)
-  },  {
+  },
+  {
     path: 'view-reservation',
     loadChildren: () => import('./view-reservation/view-reservation.module').then( m => m.ViewReservationPageModule)
   },

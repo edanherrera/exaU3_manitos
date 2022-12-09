@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs';
 import { Reservation } from '../models/reservation';
 import { Observable } from 'rxjs';
+import {  AngularFireAuth } from '@angular/fire/compat/auth';
+import {  Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +12,8 @@ export class ReservationService {
   private reservation : Reservation[] = [];
   private currentUser = ""
   private codeRooms = [4444,3333,2222,1111];
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestore: AngularFirestore,private auth:AngularFireAuth,
+    private router:Router) {
     this.reservation=[
       {
         'name' : 'Eduardo Herrera',
@@ -35,13 +38,35 @@ export class ReservationService {
     ]
   }
   
-  public addReservation(newReservation:Reservation){
-    this.firestore.collection('reservations').add(newReservation);
+  async addReservation(newReservation:Reservation,user:string){
+   await this.firestore.doc(`reservations/${user}`).set(newReservation)
+  console.log(user)
   }
 
+ async createAccount(email:string,password:string){
+    try{
+      const user = await (await this.auth.createUserWithEmailAndPassword(email+"@gmail.com",password))
+      return user
+    }catch(e){
+      return null;
+    }
+  }
+
+  async login(email:string,password:string){
+    try{
+      const user = await (await this.auth.signInWithEmailAndPassword(email+"@gmail.com",password))
+      return user
+    }catch(e){
+      return null;
+    }
+  }
+
+  public logout(){
+    this.auth.signOut()
+  }
   public setCurrentUser(user:string){
     this.currentUser = user
-  }
+  } 
 
   public getCurrentUser(){
     return this.currentUser
@@ -60,6 +85,7 @@ export class ReservationService {
         });
       }));
   }
+  
   
   public getReservationById(id:string){
     return this.firestore.collection('reservations').doc(id).valueChanges();
